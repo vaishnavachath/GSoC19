@@ -107,32 +107,27 @@
                         This post contains the information about installation and setting up of the Greybus Simulator(GBSIM) on the latest Beagleboard.org image.
                         The details of the image used are: 
                         <pre><code>debian@beaglebone:~$ uname -a
-Linux beaglebone 4.14.71-ti-r80 #1 SMP PREEMPT Fri Oct 5 23:50:11 UTC 2018 armv7l GNU/Linux
+Linux beaglebone 4.14.108-ti-r106 #1 SMP PREEMPT Fri May 24 22:12:34 UTC 2019 armv7l GNU/Linux
 debian@beaglebone:~$ cat /etc/dogtag
 BeagleBoard.org Debian Image 2018-10-07</code></pre>
                         </p>
+<p>If you are running an image older than this please update the kernel using these commands</p>
+<pre><code>cd /opt/scripts/tools/
+git pull
+sudo ./update_kernel.sh
+sudo reboot</code></pre>
 
-   
+
+
                         <h3>Install Dependencies and Kernel Headers</h3>
     
-                        <p> Install the Following tools and kernel headers which is required for building the greybus and gbsim sources</p>
+                        <p> Install the Following tools and kernel headers which is required for building the dummy_hcd driver from sources</p>
 
 <pre><code>sudo apt-get update
-sudo apt-get install build-essential libtool autoconf libconfig-dev flex bison texinfo
+sudo apt-get install build-essential libtool autoconf libconfig-dev
 sudo apt-get install linux-headers-`uname -r`</code></pre>
-
-<h3>Build and Install Greybus from sources</h3>
-    
-                        <p> Build and install the greybus driver from sources</p>
-
-<pre><code>git clone https://github.com/vaishnav98/greybus.git
-export GBDIR=".../path/to/greybus"
-cd "${GBDIR}"
- make -C /usr/src/linux-headers-`uname -r` M=$PWD
-sudo make -C /usr/src/linux-headers-`uname -r` M=$PWD modules_install</code></pre>
-
 <h3>Build and Install required dependencies from sources</h3>
-<p> Build and install the Dependencies(lisoc and libusbgx) from sources</p>
+<p> Build and install the Dependencies(libsoc and libusbgx) from sources</p>
 
 <pre><code>git clone https://github.com/jackmitch/libsoc.git
 cd libsoc
@@ -153,6 +148,7 @@ sudo ldconfig
 <h3>Build and Install gbsim from sources</h3>
 
 <pre><code>git clone https://github.com/vaishnav98/gbsim.git
+cd gbsim
 ./autogen.sh
 ./configure
 make
@@ -178,11 +174,15 @@ make</code></pre>
 <pre><code>sudo modprobe greybus
 sudo modprobe gb-es2
 sudo modprobe gb-gbphy
+sudo modprobe gb-i2c
+sudo modprobe gb-spi
+sudo modprobe gb-gpio
+sudo modprobe gb-uart
 modprobe configfs
 sudo mount -t configfs none /sys/kernel/config
 modprobe libcomposite
 sudo insmod /path/to/dummy_hcd/dummy_hcd.ko
-sudo gbsim -h /path/to/hotplug-module -b -v</code></pre>
+sudo gbsim -h /path/to/hotplug-module -b -i 1 -v</code></pre>
 <p>The output should be similar to this: </p>
 <img src="images/post/gbus1.png" alt="">
 
@@ -208,49 +208,6 @@ The dmesg log output should be similar to this:
 The dmesg log output should be similar to this: 
 <img src="images/post/gbus5.PNG" alt="">
 </div> <!-- end entry content -->
-
-         <!--           <div class="entry__pagenav">
-                        <div class="entry__nav">
-                            <div class="entry__prev">
-                                <a href="#0" rel="prev">
-                                    <span>Previous Post</span>
-                                    Tips on Minimalist Design 
-                                </a>
-                            </div>
-                            <div class="entry__next">
-                                <a href="#0" rel="next">
-                                    <span>Next Post</span>
-                                    Less Is More 
-                                </a>
-                            </div>
-                        </div>
-                    </div>  end entry__pagenav -->
-
-            <!--       <div class="entry__related">
-                        <h3 class="h2">Related Articles</h3>
-
-                        <ul class="related">
-                            <li class="related__item">
-                                <a href="single-standard.html" class="related__link">
-                                    <img src="images/thumbs/masonry/walk-600.jpg" alt="">
-                                </a>
-                                <h5 class="related__post-title">Using Repetition and Patterns in Photography.</h5>
-                            </li>
-                            <li class="related__item">
-                                <a href="single-standard.html" class="related__link">
-                                    <img src="images/thumbs/masonry/dew-600.jpg" alt="">
-                                </a>
-                                <h5 class="related__post-title">Health Benefits Of Morning Dew.</h5>
-                            </li>
-                            <li class="related__item">
-                                <a href="single-standard.html" class="related__link">
-                                    <img src="images/thumbs/masonry/rucksack-600.jpg" alt="">
-                                </a>
-                                <h5 class="related__post-title">The Art Of Visual Storytelling.</h5>
-                            </li>
-                        </ul>
-                    </div>  end entry related -->
-
                 </article> <!-- end column large-full entry-->
            
             </main>
