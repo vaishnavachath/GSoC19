@@ -123,16 +123,16 @@
 
 <p> Now Connect the Click Board to the corresponding slot and then using the insclick CLI the click can be easily interfaced</p>
 
-<pre><code>sudo python ./insclick.py -c weather -p p1</code></pre>
+<pre><code>sudo python ./insclick weather p1</code></pre>
 <p>The Command Line Utility Usage is : </p>
 <img src="images/post/clickusage.JPG" alt="">
 
-<p>Here the argument -p corresponds to the slot in which the click is connected , the PocketBeagle Mikrobus position 1 and Beaglebone Mikrobus Cape Position 1 corresponds to p1,
+<p>Here the argument port corresponds to the slot in which the click is connected , the PocketBeagle Mikrobus position 1 and Beaglebone Mikrobus Cape Position 1 corresponds to p1,
         the PocketBeagle Mikrobus position 2 and Beaglebone Mikrobus Cape Position 2 corresponds to p2, p3 and p4 corresponds to the slots 3 and 4 in the Beaglebone Mikrobus Cape
         The CLI also supports g1 and g2 slots which corresponds to the I2C and UART grove ports on the Seedstudio Beaglebone Green.
 
 <br>
-The argument -c corresponds to the click name , for example `weather` `rtc6` etc.
+The argument click corresponds to the click name , for example `weather` `rtc6` etc.
 </p>
 
 <h3>Output</h3>
