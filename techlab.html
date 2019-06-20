@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Techlab Cape GBSIM Setup Instructions</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="js/modernizr.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="icon" href="favicon.ico">
+
+</head>
+
+<body class="ss-bg-white">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-fade">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <div id="top" class="s-wrap site-wrapper">
+
+        <!-- site header
+        ================================================== -->
+        <header class="s-header header">
+
+            <div class="header__top">
+                    <div class="header__logo">
+                            <a>   GSoC '19 Project : Click Board Support Under Greybus <br> <br>                     
+                           </a>
+                           <a><strong>under Beagleboard.org Foundation</strong></a>
+       
+                       </div>
+
+               
+                <a href="#0" class="header__menu-toggle"><span>Menu</span></a>
+
+            </div>
+
+            <nav class="header__nav-wrap">
+
+                        <ul class="header__nav">
+                                <li ><a href="index.html" title="">Home</a></li>                
+                                <li class="current"><a href="index.html" title="">Blog</a></li>
+                                <li><a href="about.html" title="">About</a></li>
+                                <li><a href="contact.html" title="">Contact</a></li>
+                        </ul> <!-- end header__nav -->
+
+            
+            </nav> <!-- end header__nav-wrap -->
+
+        </header> <!-- end s-header -->
+
+
+        <!-- site content
+        ================================================== -->
+        <div class="s-content content">
+            <main class="row content__page">
+                
+                <article class="column large-full entry format-standard">
+
+                    <div class="media-wrap entry__media">
+                        <div class="entry__post-thumb">
+                            <img src="images/post/techlab.jpg" alt="">
+                        </div>
+                    </div>
+
+                    <div class="content__page-header entry__header">
+                        <h1 class="display-1 entry__title">
+                                Techlab Cape GBSIM Setup Instructions                        </h1>
+                        <ul class="entry__header-meta">
+                            <li class="author">By <a href="#0">Vaishnav M A</a></li>
+                            <li class="date">June 20, 2019</li>
+                            <li class="cat-links">
+                                <a href="#0">Clicks</a>
+                            </li>
+                        </ul>
+                    </div> <!-- end entry__header -->
+
+                    <div class="entry__content">
+
+                        <p class="lead drop-cap">
+                        This post contains all the information require to install and setup GBSIM on PocketBeagle with the Techlab Cape.
+                        
+                        <h3>Install GBSIM and required Dependencies</h3>
+    
+                        <p> Install GBSIM and required Dependencies by running the install script provided with GBSIM.</p>
+
+<pre><code>git clone https://github.com/vaishnav98/gbsim.git
+cd gbsim
+sudo sh installgbsim.sh</code></pre>
+
+The details of the image used are: 
+<pre><code>debian@beaglebone:~$ uname -a
+Linux beaglebone 4.14.108-ti-r106 #1 SMP PREEMPT Fri May 24 22:12:34 UTC 2019 armv7l GNU/Linux
+debian@beaglebone:~$ cat /etc/dogtag
+BeagleBoard.org Debian Image 2018-10-07</code></pre>
+</p>
+<p>If you are running an image older than this please update the kernel using these commands</p>
+<pre><code>cd /opt/scripts/tools/
+git pull
+sudo ./update_kernel.sh
+sudo reboot</code></pre>
+<p>and then perform the above installation Instructions</p>
+                        <h3>Start GBSIM</h3>
+    
+                        <p> Before inserting the click manifest start gbsim whether using the start script or by separately modprobe the modules and running gbsim.</p>
+
+<pre><code>sudo sh startgbsim.sh</code></pre>
+
+<h3>Insert the Click Manifest using the CLI</h3>
+
+<p>Clone and setup the insclick CLI along with the manifesto tool and create the manifest blobs</p>
+
+<pre><code>git clone https://github.com/vaishnav98/manifesto.git
+ cd manifesto
+./manifesto -o manifests/i2c1.mnfb manifests/i2c1.mnfs
+./manifesto -o manifests/i2c2.mnfb manifests/i2c2.mnfs</code></pre>
+
+<p> Now Connect the Click Board to the Techlab Cape Mikrobus slot and then using the insclick CLI the click can be easily interfaced</p>
+<p>For RTC 6 Click</p>
+<pre><code>sudo python ./insclick rtc6 p1</code></pre>
+<p>For Weather Click</p>
+<pre><code>sudo python ./insclick weather p1</code></pre>
+<p>The Command Line Utility Usage is : </p>
+<img src="images/post/clickusage.JPG" alt="">
+
+<p>Here the argument `port` corresponds to the slot in which the click is connected , the PocketBeagle Mikrobus position 1(Techlab Cape Mikrobus Slot) and Beaglebone Mikrobus Cape Position 1 corresponds to p1,
+        the PocketBeagle Mikrobus position 2 and Beaglebone Mikrobus Cape Position 2 corresponds to p2, p3 and p4 corresponds to the slots 3 and 4 in the Beaglebone Mikrobus Cape
+        The CLI also supports g1 and g2 slots which corresponds to the I2C and UART grove ports on the Seedstudio Beaglebone Green.
+
+<br>
+The argument `click` corresponds to the click name , for example `rtc6` `weather` etc.
+</p>
+
+<h3>Output</h3>
+
+
+<p>The output of the Command Line Interface should be similar to this (for the RTC 6 Click): </p>
+<img src="images/post/rtcop.JPG" alt="">
+The dmesg log output should be similar to this: 
+<img src="images/post/rtcdmsg.JPG" alt="">
+<p>A new device will be created at /sys/class/rtc1 if the click was loaded correctly, the date, time and seconds since epoch can be read using the following commands:
+
+</p>
+
+<pre><code>use cat /sys/class/rtc/rtc1/date  ;to get the RTC Date
+cat /sys/class/rtc/rtc1/time ;to get the RTC Time
+cat /sys/class/rtc/rtc1/since_epoch  ;to get the number of seconds that have elapsed since January 1, 1970 (midnight UTC/GMT)
+</code></pre>
+
+<p>The output of the Command Line Interface should be similar to this(for weather click): </p>
+<img src="images/post/weatherop.JPG" alt="">
+The dmesg log output should be similar to this: 
+<img src="images/post/weatherdmsg.JPG" alt="">
+<p>A new device will be created at /sys/bus/iio/devices if the click was loaded correctly, the Pressure, Temperature and Humidity can be read using the following commands:
+
+</p>
+
+<pre><code>cat /sys/bus/iio/devices/iio\:device1/in_humidityrelative_input
+cat /sys/bus/iio/devices/iio\:device1/in_temp_input
+cat /sys/bus/iio/devices/iio\:device1/in_pressure_input</code></pre>
+
+
+</div> <!-- end entry content -->
+                </article> <!-- end column large-full entry-->
+           
+            </main>
+
+        </div> <!-- end s-content -->
+
+
+        <!-- footer
+        ================================================== -->
+        <footer class="s-footer footer">
+            <div class="row">
+                <div class="column large-full footer__content">
+                   
+                </div>
+            </div>
+
+            <div class="go-top">
+                <a class="smoothscroll" title="Back to Top" href="#top"></a>
+            </div>
+        </footer>
+
+    </div> <!-- end s-wrap -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
