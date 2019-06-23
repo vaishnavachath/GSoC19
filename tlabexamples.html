@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>GBSIM Techlab Cape Examples</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="js/modernizr.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="icon" href="favicon.ico">
+
+</head>
+
+<body class="ss-bg-white">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-fade">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <div id="top" class="s-wrap site-wrapper">
+
+        <!-- site header
+        ================================================== -->
+        <header class="s-header header">
+
+            <div class="header__top">
+                    <div class="header__logo">
+                            <a>   GSoC '19 Project : Click Board Support Under Greybus <br> <br>                     
+                           </a>
+                           <a><strong>under Beagleboard.org Foundation</strong></a>
+       
+                       </div>
+
+               
+                <a href="#0" class="header__menu-toggle"><span>Menu</span></a>
+
+            </div>
+
+            <nav class="header__nav-wrap">
+
+                        <ul class="header__nav">
+                                <li ><a href="index.html" title="">Home</a></li>                
+                                <li class="current"><a href="index.html" title="">Blog</a></li>
+                                <li><a href="about.html" title="">About</a></li>
+                                <li><a href="contact.html" title="">Contact</a></li>
+                        </ul> <!-- end header__nav -->
+
+            
+            </nav> <!-- end header__nav-wrap -->
+
+        </header> <!-- end s-header -->
+
+
+        <!-- site content
+        ================================================== -->
+        <div class="s-content content">
+            <main class="row content__page">
+                
+                <article class="column large-full entry format-standard">
+
+                    <div class="media-wrap entry__media">
+                        <div class="entry__post-thumb">
+                            <img src="images/post/oledb.jpg" alt="">
+                        </div>
+                    </div>
+
+                    <div class="content__page-header entry__header">
+                        <h1 class="display-1 entry__title">
+                        GBSIM Techlab Cape Examples
+                        </h1>
+                        <ul class="entry__header-meta">
+                            <li class="author">By <a href="#0">Vaishnav M A</a></li>
+                            <li class="date">June 23, 2019</li>
+                            <li class="cat-links">
+                                <a href="#0">Clicks</a>
+                            </li>
+                        </ul>
+                    </div> <!-- end entry__header -->
+
+                    <div class="entry__content">
+
+                        <p class="lead drop-cap">
+                        This post contains a demonstration of using the peripherals on Techlab cape along with Mikroe Click Boards interfaced through the GBSIM Greybus Simulator, This post assumes that GBSIM and insclick utilities are correctly installed and setup in your board.
+                        
+                        <h3>Start GBSIM</h3>
+    
+                        <p> Before starting to load the clicks and running the examples, start gbsim whether using the start script or by separately modprobe the modules and running gbsim.</p>
+
+<pre><code>sudo sh startgbsim.sh</code></pre>
+
+<h3>Clone the Examples Repository</h3>
+
+<pre><code>git clone https://github.com/vaishnav98/gbsim-techlab-examples.git
+cd gbsim-techlab-examples</code></pre>
+
+<h3>OLED C Click Example</h3>
+
+<p>This example has an OLED C Click plugged into the Mikrobus Slot of the Techlab Cape and Displays a slideshow images on the OLED C Screen, the buttons(L and R) on the Techlab Cape can be used to change the currently displayed image.</p>
+
+<h4>Running the example</h4>
+<p>Connect the OLED C Click to the Techlab Cape Mikrobus Slot, Now using the insclick CLI Utility the OLED C Click can be loaded using the command</p>
+<pre><code>sudo insclick oledc p1</code></pre>
+
+<p>If the setup was successful, random text and a blinking cursor will be displayed on the OLED screen, now run the examples using the following commands:</p>
+
+<pre><code>cd oledc
+python main.py</code></pre>
+<h4>Output</h4>
+
+
+<p>The output of the example should be similar to this: </p>
+<img src="images/post/tlaboledc.png" alt="">
+
+<p>Now on pressing the buttons(L and R) on the Techlab Cape should display different images on the display. For more information about the code, see a similar project here : https://beagleboard.org/p/103416/standalone-magic-8-ball-pocketbeagle-mikro-click-boards-4f1bb4</p>
+
+<p>To change the images being displayed, the images img*.jpg on the oledc/ directory can be replaced with your images, please note that the oledc screen has an usable size of 128px X 128px and the images has to be resized to fit that particular size(ideally 96px X 96px).</p>
+
+
+<h4>Unloading the Click</h4>
+
+<p>After trying out the example unload the click using the rmclick Utility: </p>
+<p> The oledc click can be removed by running the following command:</p>
+<pre><code>sudo ./rmclick oledc</code></pre>
+
+<h3>OLED B Click Example</h3>
+
+<p>This example has an OLED B Click plugged into the Mikrobus Slot of the Techlab Cape and continously Displays the light intensity level measured by the Light Sensor in the Techlab Cape to the OLED Display.</p>
+
+<h4>Running the example</h4>
+<p>Connect the OLED B Click to the Techlab Cape Mikrobus Slot, Now using the insclick CLI Utility the OLED B Click can be loaded using the command</p>
+<pre><code>sudo insclick oledb p1</code></pre>
+
+<p>If the setup was successful, random text and a blinking cursor will be displayed on the OLED screen, now run the examples using the following commands:</p>
+
+<pre><code>cd oledb
+sudo python main.py</code></pre>
+
+<h4>Output</h4>
+
+
+<p>The output of the example should be similar to this: </p>
+<img src="images/post/tlaboledb.png" alt="">
+
+<p>Now on changing the light intensity level received by the sensor , the corresponding reading on the OLED display will change accordingly.</p>
+
+<h4>Unloading the Click</h4>
+
+<p>After trying out the example unload the click using the rmclick Utility: </p>
+<p> The oledb click can be removed by running the following command:</p>
+<pre><code>sudo ./rmclick oledb</code></pre>
+
+<h3>RTC 6 Click Example</h3>
+
+<p>This example has an RTC 6 Click plugged into the Mikrobus Slot of the Techlab Cape and continously Displays the current time obtained from the RTC to the LED 7 Segment Displays on the Techlab Cape , as there are not enough 7-seg displays available to display the time simultaneously, the example first displays Hours for 2 times, then minutes and then seconds.</p>
+
+<h4>Running the example</h4>
+<p>Connect the RTC 6 Click to the Techlab Cape Mikrobus Slot, Now using the insclick CLI Utility the RTC 6 Click can be loaded using the command</p>
+<pre><code>sudo insclick rtc6 p1</code></pre>
+
+<p>If the setup was successful, a new rtc device willbe created at /dev/rtc1, now run the examples using the following commands:</p>
+
+<pre><code>cd rtc
+sudo python main.py</code></pre>
+
+<h4>Output</h4>
+
+
+<p>The output of the example should be similar to this: </p>
+<img src="images/post/tlabrtc.png" alt="">
+
+<p>Now the current time will be displayed on the 7-seg led displays on the cape continously.</p>
+
+<h4>Unloading the Click</h4>
+
+<p>After trying out the example unload the click using the rmclick Utility: </p>
+<p> The rtc6 click can be removed by running the following command:</p>
+<pre><code>sudo ./rmclick rtc6</code></pre>
+
+</div> <!-- end entry content -->
+                </article> <!-- end column large-full entry-->
+           
+            </main>
+
+        </div> <!-- end s-content -->
+
+
+        <!-- footer
+        ================================================== -->
+        <footer class="s-footer footer">
+            <div class="row">
+                <div class="column large-full footer__content">
+                   
+                </div>
+            </div>
+
+            <div class="go-top">
+                <a class="smoothscroll" title="Back to Top" href="#top"></a>
+            </div>
+        </footer>
+
+    </div> <!-- end s-wrap -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
