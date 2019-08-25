@@ -116,8 +116,14 @@ BeagleBoard.org Debian Image 2018-10-07</code></pre>
 git pull
 sudo ./update_kernel.sh
 sudo reboot</code></pre>
+<h3>Installing GBSIM using the installation script</h3>
+An installation script has been provided with GBSIM for easy installation and setting it up as a startup service, for installing the gbsim and other dependencies perform the following commands:
 
+<pre><code>git clone https://github.com/vaishnav98/gbsim.git
+cd gbsim
+sudo ./install.sh</code></pre>
 
+<h2>Installing GBSIM Manually</h2>
 
                         <h3>Install Dependencies and Kernel Headers</h3>
     
@@ -158,7 +164,7 @@ make install</code></pre>
 
 <pre><code>mkdir dummy_hcd
 cd dummy_hcd
-wget https://raw.githubusercontent.com/beagleboard/linux/4.14/drivers/usb/gadget/udc/dummy_hcd.c
+wget https://raw.githubusercontent.com/vaishnav98/linux/4.14/drivers/usb/gadget/udc/dummy_hcd.c
 nano Makefile
 
 obj-m+=dummy_hcd.o
@@ -167,7 +173,9 @@ all:
 clean:
         make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) clean
 
-make</code></pre>
+make
+sudo cp dummy_hcd.ko /lib/modules/`uname -r`/kernel/drivers/usb/gadget/legacy/
+sudo depmod</code></pre>
 
 <h3>Running the GBSIM</h3>
 <p>The path to hotplug-module directory is the root directory which conatins the hotplug-module directory</p>
@@ -181,8 +189,9 @@ sudo modprobe gb-uart
 modprobe configfs
 sudo mount -t configfs none /sys/kernel/config
 modprobe libcomposite
-sudo insmod /path/to/dummy_hcd/dummy_hcd.ko
-sudo gbsim -h /path/to/hotplug-module -b -i 1 -v</code></pre>
+sudo modprobe dummy_hcd num=1(Number of Mikrobus Ports 1-4)
+mkdir -p /tmp/gbsim0/hotplug-module	
+gbsim -g 0 -h /tmp/gbsim0/ -c 0 -s 1 -i 1</code></pre>
 <p>The output should be similar to this: </p>
 <img src="images/post/gbus1.png" alt="">
 
@@ -192,7 +201,7 @@ sudo gbsim -h /path/to/hotplug-module -b -i 1 -v</code></pre>
 
 <pre><code>git clone https://github.com/projectara/manifesto.git
 cd manifesto
-./manifesto -o manifestblobname.mnfb examples/IID1-simple-i2c-module.mnfs
+./manifesto -o manifestblobname.mnfb manifests/gpio.mnfs
 cp ./manifestblobname.mnfb /path/to/hotplug-module/
 </code></pre>
 <p>The output should be similar to this: </p>

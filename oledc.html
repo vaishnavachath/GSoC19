@@ -104,23 +104,23 @@
                     <div class="entry__content">
 
                         <p class="lead drop-cap">
-                        This post contains a basic test demonstration for the work in progress spi based OLEDC click support through greybus, This post assumes that GBSIM is correctly installed and setup in your board.OLED C click is equipped with the 96x96 high-color OLED display. It can display up to 65K/262K different colors and shades on a compact size display, based on the OLED technology. The OLED technology provides a very good brightness-to-contrast ratio, doesn’t require any backlight - since the pixel elements emit light on their own, better angle of viewing - compared to traditional TFT screens, better power consumption, better picture quality, better response times and more.
+                        This post contains a basic test demonstration for the spi based OLEDC click support through greybus, This post assumes that GBSIM is correctly installed and setup in your board.OLED C click is equipped with the 96x96 high-color OLED display. It can display up to 65K/262K different colors and shades on a compact size display, based on the OLED technology. The OLED technology provides a very good brightness-to-contrast ratio, doesn’t require any backlight - since the pixel elements emit light on their own, better angle of viewing - compared to traditional TFT screens, better power consumption, better picture quality, better response times and more.
                         <h3>Start GBSIM</h3>
     
-                        <p> Before inserting the click manifest start gbsim wither using the start script or by separately modprobe the modules and running gbsim.</p>
+                        <p> Before inserting the click manifest start gbsim(if not already running as service) whether using the start script or by separately modprobe the modules and running gbsim.</p>
 
-<pre><code>sudo sh startgbsim.sh</code></pre>
+<pre><code>sudo startgbsim</code></pre>
 
 <h3>Insert the Click Manifest using the CLI</h3>
 <p>Clone and setup the insclick CLI along with the manifesto tool and create the manifest blobs</p>
 
 <pre><code>git clone https://github.com/vaishnav98/manifesto.git
- cd manifesto
-./manifesto -o manifests/oled.mnfb manifests/oled.mnfs</code></pre>
+cd manifesto
+sudo sh ./install.sh</code></pre>    
 
 <p> Now Connect the Click Board to the corresponding slot and then using the insclick CLI the click can be easily interfaced</p>
 
-<pre><code>sudo ./insclick oledc p1</code></pre>
+<pre><code>sudo insclick oledc p1</code></pre>
 <h3>Output</h3>
 
 
@@ -146,7 +146,7 @@ The input and output after displaying an image on the OLEDC Click is:
 <img src="images/post/rmclickusage.JPG" alt="">
 <p> The oledc click can be removed by running the following command:</p>
 
-<pre><code>sudo ./rmclick oledc</code></pre>
+<pre><code>sudo rmclick oledc p1</code></pre>
 
 
 </div> <!-- end entry content -->

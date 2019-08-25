@@ -109,27 +109,25 @@
 
                         <h3>Start GBSIM</h3>
     
-                        <p> Before inserting the click manifest start gbsim wither using the start script or by separately modprobe the modules and running gbsim.</p>
+                        <p> Before inserting the click manifest start gbsim(if not already running as service) whether using the start script or by separately modprobe the modules and running gbsim.</p>
 
-<pre><code>sudo sh startgbsim.sh</code></pre>
+<pre><code>sudo startgbsim</code></pre>
 
 <h3>Insert the Click Manifest using the CLI</h3>
 <p>Clone and setup the insclick CLI along with the manifesto tool and create the manifest blobs</p>
 
 <pre><code>git clone https://github.com/vaishnav98/manifesto.git
- cd manifesto
-./manifesto -o manifests/i2c1.mnfb manifests/i2c1.mnfs
-./manifesto -o manifests/i2c2.mnfb manifests/i2c2.mnfs</code></pre>
+cd manifesto
+sudo sh ./install.sh</code></pre>
 
 <p> Now Connect the Click Board to the corresponding slot and then using the insclick CLI the click can be easily interfaced</p>
 
-<pre><code>sudo python ./insclick weather p1</code></pre>
+<pre><code>sudo insclick weather p1</code></pre>
 <p>The Command Line Utility Usage is : </p>
 <img src="images/post/clickusage.JPG" alt="">
 
 <p>Here the argument port corresponds to the slot in which the click is connected , the PocketBeagle Mikrobus position 1 and Beaglebone Mikrobus Cape Position 1 corresponds to p1,
         the PocketBeagle Mikrobus position 2 and Beaglebone Mikrobus Cape Position 2 corresponds to p2, p3 and p4 corresponds to the slots 3 and 4 in the Beaglebone Mikrobus Cape
-        The CLI also supports g1 and g2 slots which corresponds to the I2C and UART grove ports on the Seedstudio Beaglebone Green.
 
 <br>
 The argument click corresponds to the click name , for example `weather` `rtc6` etc.
@@ -157,7 +155,7 @@ cat /sys/bus/iio/devices/iio\:device1/in_pressure_input</code></pre>
 <img src="images/post/rmclickusage.JPG" alt="">
 <p> The weather click can be removed by running the following command:</p>
 
-<pre><code>sudo ./rmclick weather</code></pre>
+<pre><code>sudo rmclick weather p1</code></pre>
 
 </div> <!-- end entry content -->
                 </article> <!-- end column large-full entry-->

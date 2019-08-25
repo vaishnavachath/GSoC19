@@ -108,9 +108,9 @@
                         
                         <h3>Start GBSIM</h3>
     
-                        <p> Before starting to load the clicks and running the examples, start gbsim whether using the start script or by separately modprobe the modules and running gbsim.</p>
+                        <p> Before starting to load the clicks and running the examples, start gbsim(if not already running as service) whether using the start script or by separately modprobe the modules and running gbsim.</p>
 
-<pre><code>sudo sh startgbsim.sh</code></pre>
+<pre><code>sudo startgbsim</code></pre>
 
 <h3>Clone the Examples Repository</h3>
 
@@ -144,7 +144,7 @@ python main.py</code></pre>
 
 <p>After trying out the example unload the click using the rmclick Utility: </p>
 <p> The oledc click can be removed by running the following command:</p>
-<pre><code>sudo ./rmclick oledc</code></pre>
+<pre><code>sudo rmclick oledc p1</code></pre>
 
 <h3>OLED B Click Example</h3>
 
@@ -171,7 +171,7 @@ sudo python main.py</code></pre>
 
 <p>After trying out the example unload the click using the rmclick Utility: </p>
 <p> The oledb click can be removed by running the following command:</p>
-<pre><code>sudo ./rmclick oledb</code></pre>
+<pre><code>sudo rmclick oledb p1</code></pre>
 
 <h3>RTC 6 Click Example</h3>
 
@@ -198,7 +198,7 @@ sudo python main.py</code></pre>
 
 <p>After trying out the example unload the click using the rmclick Utility: </p>
 <p> The rtc6 click can be removed by running the following command:</p>
-<pre><code>sudo ./rmclick rtc6</code></pre>
+<pre><code>sudo rmclick rtc6 p1</code></pre>
 
 </div> <!-- end entry content -->
                 </article> <!-- end column large-full entry-->

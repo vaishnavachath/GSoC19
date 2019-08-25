@@ -108,29 +108,27 @@
                         Beaglebone Black, This post assumes that GBSIM is correctly installed and setup in your board.MPU 9DOF click carries the MPU–9250 System in Package, which is the world’s first 9-axis Motion Tracking device. MPU–9250 comprises two chips. One is the MPU–6050 that contains a 3-axis accelerometer, a 3-axis gyroscope, and a DMP (digital motion processor); the other is AK8975, a 3-axis digital compass. It is designed for the low power, low cost, and high-performance requirements of consumer electronics equipment and wearable sensors. 
                         <h3>Start GBSIM</h3>
     
-                        <p> Before inserting the click manifest start gbsim wither using the start script or by separately modprobe the modules and running gbsim.</p>
+                        <p> Before inserting the click manifest start gbsim(if not already running as service) whether using the start script or by separately modprobe the modules and running gbsim.</p>
 
-<pre><code>sudo sh startgbsim.sh</code></pre>
+<pre><code>sudo startgbsim</code></pre>
 
 <h3>Insert the Click Manifest using the CLI</h3>
 <p>Clone and setup the insclick CLI along with the manifesto tool and create the manifest blobs</p>
 
 <pre><code>git clone https://github.com/vaishnav98/manifesto.git
- cd manifesto
-./manifesto -o manifests/i2c1.mnfb manifests/i2c1.mnfs
-./manifesto -o manifests/gpio.mnfb manifests/gpio.mnfs
-./manifesto -o manifests/i2c2.mnfb manifests/i2c2.mnfs
-sudo cp manifests/i2c1.mnfb /tmp/gbsim/hotplug-module/
-sudo cp manifests/gpio.mnfb /tmp/gbsim/hotplug-module/</code></pre>
+cd manifesto
+sudo sh ./install.sh</code></pre>
 
 <h3>Clone and Compile the Mikrobus Kernel Module</h3>
-<p>Clone and setup the  Mikrobus Kernel Module , connect the click to the corresponding slot and instantiate the mpu9dof click on the greybus i2c bus</p>
+<p>Clone and setup the  Mikrobus Kernel Module </p>
 
 <pre><code>git clone https://github.com/vaishnav98/mikrobus_device.git
  cd mikrobus_device
- make -C /usr/src/linux-headers-4.14.108-ti-r108/ M=$PWD
- sudo insmod mikrobus.ko
- sudo insmod mikrobus_i2c_device.ko name=mpu9dof port=PBP1</code></pre>
+ make all install</code></pre>
+
+ <p> Now Connect the Click Board to the corresponding slot and then using the insclick CLI the click can be easily interfaced</p>
+
+<pre><code>sudo insclick mpu9dof p1</code></pre>
 
 <h3>Output</h3>
 
@@ -151,6 +149,14 @@ cat /sys/bus/iio/devices/iio\:device1/in_temp_raw</code></pre>
 The output should be similar to this: 
 <img src="images/post/mpuout.JPG" alt="">
 
+<h3>Unloading the Click</h3>
+
+
+<p>The rmclick utility/command can be used to remove/free the Greybus Interface and Unload the Click, the rmclick usage is: </p>
+<img src="images/post/rmclickusage.JPG" alt="">
+<p> The oledc click can be removed by running the following command:</p>
+
+<pre><code>sudo rmclick mpu9dof p1</code></pre>
 </div> <!-- end entry content -->
                 </article> <!-- end column large-full entry-->
            
